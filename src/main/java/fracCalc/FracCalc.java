@@ -38,20 +38,60 @@ public class FracCalc {
 	// calculated
 	// e.g. return ==> "1_1/4"
 	public static String produceAnswer(String input) {
-		
+
 		// TODO: Implement this function to produce the solution to the input
-		
+
 		Scanner scanInput = new Scanner(input);
-		
+
 		String fraction1 = scanInput.next();
 		String operator = scanInput.next();
 		String fraction2 = scanInput.next();
-		
-		
+
 		scanInput.close();
-		return fraction2;
+		return "whole:" + getWholeNumber(fraction2) + " numerator:" + getNumerator(fraction2) + " denominator:"
+				+ getDenominator(fraction2);
 	}
 
 	// TODO: Fill in the space below with any helper methods that you think you will
 	// need
+
+	public static int getWholeNumber(String input) {
+
+		int firstUnderScore = input.indexOf('_');
+		int divisionSymbol = input.indexOf('/');
+		
+		if (firstUnderScore == -1 && divisionSymbol == -1) {
+			
+			return Integer.parseInt(input);
+		
+	    } else if (firstUnderScore <= 0) {
+
+			return 0;
+
+		} else {
+			String stringWholeNumber = input.substring(0, firstUnderScore);
+			return Integer.parseInt(stringWholeNumber);
+		}
+	}
+
+	public static int getNumerator(String input) {
+		int firstUnderScore = input.indexOf('_');
+		int divisionSymbol = input.indexOf('/');
+		if (divisionSymbol == -1) {
+			return 0;
+		} else {
+			String numerator = input.substring(firstUnderScore + 1, divisionSymbol);
+			return Integer.parseInt(numerator);
+		}
+	}
+
+	public static int getDenominator(String input) {
+		int divisionSymbol = input.indexOf('/');
+		if (divisionSymbol == -1) {
+			return 1;
+		} else {
+			String denominator = input.substring(divisionSymbol + 1);
+			return Integer.parseInt(denominator);
+		}
+	}
 }
