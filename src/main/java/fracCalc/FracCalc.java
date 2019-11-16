@@ -55,18 +55,12 @@ public class FracCalc {
 	// need
 
 	public static int getWholeNumber(String input) {
-
 		int firstUnderScore = input.indexOf('_');
 		int divisionSymbol = input.indexOf('/');
-
 		if (firstUnderScore == -1 && divisionSymbol == -1) {
-
 			return Integer.parseInt(input);
-
 		} else if (firstUnderScore <= 0) {
-
 			return 0;
-
 		} else {
 			String stringWholeNumber = input.substring(0, firstUnderScore);
 			return Integer.parseInt(stringWholeNumber);
@@ -95,18 +89,52 @@ public class FracCalc {
 	}
 
 	public static String improperToForm(int numerator, int denominator) {
-
 		int whole = numerator / denominator;
 		int remainingNumerator = numerator % denominator;
-		
-		
-		return "" + whole + "_" + remainingNumerator + "/" + denominator;
+		if (remainingNumerator == 0) {
+			return "" + whole;
+		} else if (whole == 0) {
+			return reduceFraction(whole, remainingNumerator, denominator);
+		} else {
+			String reducedFraction = reduceFraction(whole, remainingNumerator, denominator);
+
+			return "" + whole + "_" + reducedFraction;
+		}
+	}
+
+	public static String reduceFraction(int whole, int numerator, int denominator) {
+		int checkCount = 1;
+		int gCF = 1;
+		int modCheckNum = 0;
+		int modCheckDen = 0;
+		if (whole != 0) {
+			numerator = Math.abs(numerator);
+			denominator = Math.abs(denominator);
+		}
+		if (Math.abs(numerator) < Math.abs(denominator)) {
+			checkCount = Math.abs(numerator);
+		} else {
+			checkCount = Math.abs(denominator);
+		}
+		for (int i = 1; i <= checkCount; i++) {
+			modCheckNum = numerator % i;
+			modCheckDen = denominator % i;
+			if (modCheckNum == 0 && modCheckDen == 0) {
+				gCF = i;
+			}
+		}
+		int newNumerator = numerator / gCF;
+		int newDenominator = denominator / gCF;
+		if (newDenominator < 0) {
+			newDenominator = Math.abs(newDenominator);
+			newNumerator = -newNumerator;
+		}
+		return newNumerator + "/" + newDenominator;
 
 	}
 
 	public static String operate(String fraction1, String operator, String fraction2) {
 		if (operator.equals("*")) {
-
 			int whole1 = getWholeNumber(fraction1);
 			int numerator1 = getNumerator(fraction1);
 			if (whole1 < 0) {
@@ -124,7 +152,6 @@ public class FracCalc {
 			int newDenominator = denominator1 * denominator2;
 			int newNumerator = improperNumerator1 * improperNumerator2;
 			return improperToForm(newNumerator, newDenominator);
-
 		} else if (operator.equals("/")) {
 
 			int whole1 = getWholeNumber(fraction1);
@@ -144,7 +171,6 @@ public class FracCalc {
 			int newDenominator = denominator1 * improperNumerator2;
 			int newNumerator = improperNumerator1 * denominator2;
 			return improperToForm(newNumerator, newDenominator);
-
 		} else if (operator.equals("-")) {
 
 			int whole1 = getWholeNumber(fraction1);
@@ -166,7 +192,6 @@ public class FracCalc {
 			int cDDenominator = denominator1 * denominator2;
 			int subtractedNumerator = cDNumerator1 - cDNumerator2;
 			return improperToForm(subtractedNumerator, cDDenominator);
-
 		} else {
 
 			int whole1 = getWholeNumber(fraction1);
@@ -188,7 +213,7 @@ public class FracCalc {
 			int cDDenominator = denominator1 * denominator2;
 			int subtractedNumerator = cDNumerator1 + cDNumerator2;
 			return improperToForm(subtractedNumerator, cDDenominator);
-
 		}
 	}
+
 }
