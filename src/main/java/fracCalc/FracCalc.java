@@ -48,8 +48,7 @@ public class FracCalc {
 		String fraction2 = scanInput.next();
 
 		scanInput.close();
-		return "whole:" + getWholeNumber(fraction2) + " numerator:" + getNumerator(fraction2) + " denominator:"
-				+ getDenominator(fraction2);
+		return operate(fraction1, operator, fraction2);
 	}
 
 	// TODO: Fill in the space below with any helper methods that you think you will
@@ -59,12 +58,12 @@ public class FracCalc {
 
 		int firstUnderScore = input.indexOf('_');
 		int divisionSymbol = input.indexOf('/');
-		
+
 		if (firstUnderScore == -1 && divisionSymbol == -1) {
-			
+
 			return Integer.parseInt(input);
-		
-	    } else if (firstUnderScore <= 0) {
+
+		} else if (firstUnderScore <= 0) {
 
 			return 0;
 
@@ -92,6 +91,104 @@ public class FracCalc {
 		} else {
 			String denominator = input.substring(divisionSymbol + 1);
 			return Integer.parseInt(denominator);
+		}
+	}
+
+	public static String improperToForm(int numerator, int denominator) {
+
+		int whole = numerator / denominator;
+		int remainingNumerator = numerator % denominator;
+		
+		
+		return "" + whole + "_" + remainingNumerator + "/" + denominator;
+
+	}
+
+	public static String operate(String fraction1, String operator, String fraction2) {
+		if (operator.equals("*")) {
+
+			int whole1 = getWholeNumber(fraction1);
+			int numerator1 = getNumerator(fraction1);
+			if (whole1 < 0) {
+				numerator1 = -numerator1;
+			}
+			int denominator1 = getDenominator(fraction1);
+			int whole2 = getWholeNumber(fraction2);
+			int numerator2 = getNumerator(fraction2);
+			if (whole2 < 0) {
+				numerator2 = -numerator2;
+			}
+			int denominator2 = getDenominator(fraction2);
+			int improperNumerator1 = whole1 * denominator1 + numerator1;
+			int improperNumerator2 = whole2 * denominator2 + numerator2;
+			int newDenominator = denominator1 * denominator2;
+			int newNumerator = improperNumerator1 * improperNumerator2;
+			return improperToForm(newNumerator, newDenominator);
+
+		} else if (operator.equals("/")) {
+
+			int whole1 = getWholeNumber(fraction1);
+			int numerator1 = getNumerator(fraction1);
+			if (whole1 < 0) {
+				numerator1 = -numerator1;
+			}
+			int denominator1 = getDenominator(fraction1);
+			int whole2 = getWholeNumber(fraction2);
+			int numerator2 = getNumerator(fraction2);
+			if (whole2 < 0) {
+				numerator2 = -numerator2;
+			}
+			int denominator2 = getDenominator(fraction2);
+			int improperNumerator1 = whole1 * denominator1 + numerator1;
+			int improperNumerator2 = whole2 * denominator2 + numerator2;
+			int newDenominator = denominator1 * improperNumerator2;
+			int newNumerator = improperNumerator1 * denominator2;
+			return improperToForm(newNumerator, newDenominator);
+
+		} else if (operator.equals("-")) {
+
+			int whole1 = getWholeNumber(fraction1);
+			int numerator1 = getNumerator(fraction1);
+			if (whole1 < 0) {
+				numerator1 = -numerator1;
+			}
+			int denominator1 = getDenominator(fraction1);
+			int whole2 = getWholeNumber(fraction2);
+			int numerator2 = getNumerator(fraction2);
+			if (whole2 < 0) {
+				numerator2 = -numerator2;
+			}
+			int denominator2 = getDenominator(fraction2);
+			int improperNumerator1 = whole1 * denominator1 + numerator1;
+			int improperNumerator2 = whole2 * denominator2 + numerator2;
+			int cDNumerator1 = improperNumerator1 * denominator2;
+			int cDNumerator2 = improperNumerator2 * denominator1;
+			int cDDenominator = denominator1 * denominator2;
+			int subtractedNumerator = cDNumerator1 - cDNumerator2;
+			return improperToForm(subtractedNumerator, cDDenominator);
+
+		} else {
+
+			int whole1 = getWholeNumber(fraction1);
+			int numerator1 = getNumerator(fraction1);
+			if (whole1 < 0) {
+				numerator1 = -numerator1;
+			}
+			int denominator1 = getDenominator(fraction1);
+			int whole2 = getWholeNumber(fraction2);
+			int numerator2 = getNumerator(fraction2);
+			if (whole2 < 0) {
+				numerator2 = -numerator2;
+			}
+			int denominator2 = getDenominator(fraction2);
+			int improperNumerator1 = whole1 * denominator1 + numerator1;
+			int improperNumerator2 = whole2 * denominator2 + numerator2;
+			int cDNumerator1 = improperNumerator1 * denominator2;
+			int cDNumerator2 = improperNumerator2 * denominator1;
+			int cDDenominator = denominator1 * denominator2;
+			int subtractedNumerator = cDNumerator1 + cDNumerator2;
+			return improperToForm(subtractedNumerator, cDDenominator);
+
 		}
 	}
 }
