@@ -12,13 +12,13 @@ public class FracCalc {
 		Scanner scan = new Scanner(System.in);
 		boolean done = false;
 		while (!done) {
-			System.out.println("Enter your fractional calculation (Type 0 to quit): ");
+			System.out.println("Enter your fractional calculation (Type \"quit\" to quit): ");
 			String input = scan.nextLine();
-			if (input.equals("0")) {
-				break;
+			if (input.equals("quit")) {
+				done = true;
+			} else {
+				System.out.println(produceAnswer(input));
 			}
-
-			System.out.println(produceAnswer(input));
 		}
 		scan.close();
 
